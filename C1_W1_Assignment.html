@@ -127,7 +127,7 @@
                               epochs:100,
                               validationData: convertedTestingData,
                               callbacks:{
-                                  onEpochEnd: async(epoch, logs) =>{
+                                  onEpochEnd: async(epoch, logs, ...abc) =>{
                                       console.log("Epoch: " + epoch + " Loss: " + logs.loss + " Accuracy: " + logs.acc);
                                       console.log(logs)
                                   }
