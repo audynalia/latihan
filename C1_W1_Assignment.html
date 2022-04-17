@@ -18,6 +18,7 @@
                         isLabel: true
                     }
                 }
+                
             });
             
             // Convert the training data into arrays in the space below.
@@ -34,6 +35,7 @@
                     ys: Object.values([ys.diagnosis])
                 })
             }).batch(10);
+            
             console.log(await convertedTrainingData)                                                                 
             const testingUrl = '/data/wdbc-test.csv';
             
@@ -115,18 +117,19 @@
             // Compile the model using the binaryCrossentropy loss, 
             // the rmsprop optimizer, and accuracy for your metrics. 
             model.compile({
-                loss: 'binaryCrossentropy',
+                loss: "binaryCrossentropy",
                 optimizer:  tf.train.rmsprop(0.07),
                 metrics:['accuracy']
             });
             
             
-            await model.fitDataset(convertedTrainingData, 
+            await model.fitDataset(convertedTrainingData, {
                              {epochs:100,
                               validationData: convertedTestingData,
                               callbacks:{
                                   onEpochEnd: async(epoch, logs) =>{
                                       console.log("Epoch: " + epoch + " Loss: " + logs.loss + " Accuracy: " + logs.acc);
+                                      console.log(logs)
                                   }
                               }});
             await model.save('downloads://my_model');
